@@ -202,7 +202,7 @@
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            /* backdrop-filter: blur(10px); */
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -233,6 +233,12 @@
         <div class="flap" id="flap">Open ❤️</div>
         <div class="body">
             <div class="letter">
+                 <div class="musi-player">
+                    <audio id="birthdy-song" controls autoplay loop>
+                        <source src="PrettyLittleBaby.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
                 <h1>Happy Birthday My Love ❤️</h1>
                 <p>
                     Happy Birthday, my favorite person ❤️<br>
@@ -246,11 +252,9 @@
                     I hope your day is filled with love, cute surprises, and all the happiness you deserve.<br>
                     And selfishly… I hope I get to be part of your every birthday ahead too. 🌷✨
                 </p>
-                <div class="music-player">
-                    <audio id="birthday-song" loop autoplay >
-                        <source src="PrettyLittleBaby.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                
+               
+
                 </div>
             </div>
         </div>
