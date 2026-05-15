@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danger Sign</title>
+
+    <!-- W3.CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+
+    <style>
+        body{
+            background:#f1f1f1;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .triangle{
+            width:0;
+            height:0;
+            border-left:220px solid transparent;
+            border-right:220px solid transparent;
+            border-bottom:380px solid red;
+            position:relative;
+        }
+
+        .triangle::before{
+            content:"";
+            position:absolute;
+            top:20px;
+            left:-190px;
+            width:0;
+            height:0;
+            border-left:190px solid transparent;
+            border-right:190px solid transparent;
+            border-bottom:330px solid white;
+        }
+
+        .content{
+            position:absolute;
+            top:80px;
+            left:-140px;
+            width:280px;
+            text-align:center;
+            z-index:2;
+            font-family:Arial;
+        }
+
+        .skull{
+            font-size:90px;
+            color:red;
+        }
+
+        .danger{
+            margin-top:40px;
+            font-size:55px;
+            font-weight:bold;
+            color:red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="triangle">
+
+    <div class="content">
+        <div class="skull">☠</div>
+
+        <div class="danger">
+            DANGER
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Danger Board</title>
+
+  <!-- W3.CSS Link -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+</head>
+
+<body>
+
+<div class="w3-panel w3-red w3-center w3-padding-32" style="width:300px; margin:auto; margin-top:100px; border:5px solid black;">
+  
+  <h1>⚠ DANGER ⚠</h1>
+  
+  <p>Unauthorized Access Not Allowed</p>
+
+</div>
+
+</body>
+</html>

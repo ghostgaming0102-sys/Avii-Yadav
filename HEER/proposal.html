@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be Mine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 25%, #fd79a8 50%, #fdcb6e 75%, #e17055 100%);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.8);
+            font-size: 20px;
+            animation: float 8s infinite linear;
+        }
+
+        .particle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 10px;
+            animation: sparkle 5s infinite ease-in-out;
+        }
+
+        .teddy {
+            position: absolute;
+            font-size: 30px;
+            animation: bounce 6s infinite;
+        }
+
+        .monkey {
+            position: absolute;
+            font-size: 25px;
+            animation: swing 7s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        /* Proposal Card */
+        .proposal-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .card-title {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2em;
+            color: #e84393;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(232, 67, 147, 0.5);
+        }
+
+        .proposal-text {
+            font-size: 1.2em;
+            color: #636e72;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 118, 117, 0.4);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #a29bfe, #fd79a8);
+            color: white;
+            position: absolute;
+        }
+
+        .no-btn:hover {
+            transform: translateX(50px) translateY(-20px);
+        }
+
+        #next-name-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #fd79a8, #a29bfe);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+            z-index: 101;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #next-name-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        }
+
+        /* Success Animation */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-message {
+            text-align: center;
+            font-size: 2em;
+            color: #e84393;
+            animation: bounceIn 1s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .floating-success {
+            position: absolute;
+            font-size: 2em;
+            animation: floatUp 3s infinite ease-in-out;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+
+        /* Audio */
+        audio {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 200px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floating-elements"></div>
+    
+    <div class="proposal-card">
+        <h1 class="card-title">A Special Question For You 💌</h1>
+        <p class="proposal-text">
+            From the moment you came into my life, everything started feeling more beautiful. Your smile, your care, your presence means the world to me. I just want to ask… Will you stay with me forever? ❤️
+        </p> <br>
+        <h4>Dum Hai Toh No krke Dhikhao BETUU!!</h4>
+        <div class="buttons">
+            <button class="btn yes-btn" id="yes-btn">Yes 💖</button>
+            <button class="btn no-btn" id="no-btn">No 🙈</button>
+        </div>
+    </div>
+
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-message" id="success-message">
+            Yayyy! You just made me the happiest person alive 🥺❤️ <br>
+            <p>I LOVE YOU BACCHA!!</p>
+           
+        </div>
+    </div>
+
+    <button id="next-name-btn" onclick="openCompliment()">Next</button>
+
+    <audio id="proposal-music" autoplay loop>
+        <source src="Tu jo mileya.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Generate floating elements
+        const container = document.getElementById('floating-elements');
+        const numHearts = 15;
+        const numParticles = 20;
+        const numTeddies = 5;
+        const numMonkeys = 5;
+
+        for (let i = 0; i < numHearts; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 8 + 's';
+            container.appendChild(heart);
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.innerHTML = '✨';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(particle);
+        }
+
+        for (let i = 0; i < numTeddies; i++) {
+            const teddy = document.createElement('div');
+            teddy.className = 'teddy';
+            teddy.innerHTML = '🧸';
+            teddy.style.left = Math.random() * 90 + '%';
+            teddy.style.top = Math.random() * 90 + '%';
+            teddy.style.animationDelay = Math.random() * 6 + 's';
+            container.appendChild(teddy);
+        }
+
+        for (let i = 0; i < numMonkeys; i++) {
+            const monkey = document.createElement('div');
+            monkey.className = 'monkey';
+            monkey.innerHTML = '🐒';
+            monkey.style.left = Math.random() * 90 + '%';
+            monkey.style.top = Math.random() * 90 + '%';
+            monkey.style.animationDelay = Math.random() * 7 + 's';
+            container.appendChild(monkey);
+        }
+
+        // Button interactions
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const successOverlay = document.getElementById('success-overlay');
+
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        noBtn.addEventListener('click', () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            successOverlay.style.display = 'flex';
+            const nextBtn = document.getElementById('next-name-btn');
+            if (nextBtn) {
+                nextBtn.style.display = 'block';
+            }
+            // Add floating success elements
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.className = 'floating-success';
+                    element.innerHTML = ['❤️', '🧸', '🐒', '✨'][Math.floor(Math.random() * 4)];
+                    element.style.left = Math.random() * 100 + '%';
+                    successOverlay.appendChild(element);
+                    setTimeout(() => element.remove(), 3000);
+                }, i * 200);
+            }
+        });
+
+        function openCompliment() {
+            const proposalMusic = document.getElementById('proposal-music');
+            if (proposalMusic) {
+                proposalMusic.pause();
+                proposalMusic.currentTime = 0;
+            }
+            window.open('compliment.html', '_blank');
+        }
+    </script>
+</body>
+</html>
